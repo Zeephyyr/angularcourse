@@ -1,0 +1,47 @@
+<div ng-controller="TeamsCtrl" class="col-md-12">
+    <form name="teamForm" ng-submit="addTeam(teamFor.$valid)" novalidate>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <input type="text" name="teamName" ng-model="teamName" placeholder="team name" class="form-control" required
+                    ng-minlength="1" ng-pattern="/^([a-zA-Z0-9])+$/" ng-change="teamsContain()">
+                <span style="color:red" ng-show="teamForm.teamName.$dirty && teamForm.teamName.$invalid || teamForm.teamName.duplicateName">
+                    <span ng-show="teamForm.teamName.$error.pattern">Only letters and numbers are allowed.</span>
+                    <span ng-show="teamForm.teamName.duplicateName">Duplicated team names are not allowed.</span>
+                </span>
+            </div>
+            <div class="form-group col-md-4">
+                <button type="submit" class="btn btn-group btn-primary" ng-disabled="teamForm.$invalid || teamForm.teamName.duplicateName">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <uib-accordion close-others="true">
+            <div uib-accordion-group class="panel-default" heading="{{team.name}}" ng-repeat="team in teams"
+                is-open="team.isOpened" ng-click="selectTeam(team)">
+                <div class="row" ng-repeat="member in team.members">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <button popover-title="{{member.name}}" type="button"
+                                    popover-trigger="'mouseenter'" class="btn btn-default" ng-mouseenter="getActiveMember(member)"
+                                    uib-popover-template="'popover.html'" style="width:inherit">
+                                {{member.name}}
+                            </button>
+                            <span ng-click="removeMember(member)">
+                                <i class="glyphicon glyphicon-remove"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>
+
+<script type="text/ng-template" id="popover.html">
+        <p><strong>Position:</strong> {{member.job}}</p>
+        <p><strong>Grade:</strong> {{member.grade}}</p>
+        <p><strong>Age:</strong> {{member.age}}</p>
+</script>

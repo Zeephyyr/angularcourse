@@ -1,0 +1,61 @@
+<div class="row">
+    <div my-search>
+    </div>
+</div>
+</br>
+<div class="row">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th style="width:102px">
+
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Job
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    Grade
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat-start="employee in filtered=(emplList | filter:filterEmployees) | limitTo:itemsPerPage:(currentPage - 1) * itemsPerPage">
+                <td>
+                    <button class="btn btn-default" ng-click="addToTeam(employee)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <button class="btn btn-default" ng-click="employee.isShown=!employee.isShown">
+                        <span class="glyphicon" ng-class="employee.isShown?'glyphicon-menu-down':
+                        'glyphicon-menu-right'"></span>
+                    </button>
+                </td>
+                <td>
+                    {{employee.name}}
+                </td>
+                <td>
+                    {{employee.job}}
+                </td>
+                <td>
+                    {{employee.age}}
+                </td>
+                <td>
+                    {{employee.grade}}
+                </td>
+            </tr>
+            <tr ng-repeat-end="employee in filtered=(emplList | filter:filterEmployees) | limitTo:itemsPerPage:(currentPage - 1) * itemsPerPage"
+                uib-collapse="!employee.isShown">
+                <td colspan="5">
+                    <textarea class="form-control" rows="5" ng-model="employee.review"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</br>
+<uib-pager uib-pager total-items="filtered.length" ng-model="currentPage"></uib-pager>

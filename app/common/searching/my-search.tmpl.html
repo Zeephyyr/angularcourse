@@ -1,0 +1,23 @@
+<div class="col-md-11">
+    <div class="input-group">
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
+        <tags-input ng-model="tags" placeholder="name, job, grade" replace-spaces-with-dashes="false"
+                    on-tag-added="modifyTags()" on-tag-removed="modifyTags()" add-from-autocomplete-only="true"
+                    display-property="text">
+            <auto-complete source="loadTags($query)"
+                           min-length="1"
+                           load-on-focus="true"
+                           load-on-empty="false"
+                           max-results-to-show="10"
+                           template="tag-template"></auto-complete>
+        </tags-input>
+    </div>
+</div>
+
+<script type="text/ng-template" id="tag-template">
+    <div>
+        <span ng-bind-html="$highlight($getDisplayText())"></span>
+    </div>
+</script>
